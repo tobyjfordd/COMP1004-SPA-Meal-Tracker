@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <title>Meal Tracker</title>
+</head>
+<body>
+
+    <div id="site" class="fill"> </div>
+
+    <!-- Templates -->
+
+    <!-- wrapper -->
+    <template id="navigation-wrapper-template">
+        <div id="navigation-wrapper">
+            <div id="navigation-wrapper-header">
+                <div> SPA Meal Tracker </div>
+            </div>
+            <div id="navigation-wrapper-body">
+                <div id="navigation-wrapper-sidebar">
+                    <button id="open-dashboard-button"> Dashboard </button>
+                    <button id="open-ingredients-button"> Ingredients </button>
+                </div>
+                <div id="wrapper-content-container">
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- sections -->
+
+    <template id="meal-recording-section-template">
+        <div class="form-card">
+            <div>
+                <div class="header-1 white-text"> MEAL RECORDING </div>
+                <div class="grey-text"> Just had a meal - record it here. </div>
+            </div>
+            <div>
+                <div class="entry-title"> Select a meal </div>
+                <select id="meal-selection" data-role="meal"></select>
+            </div>
+            <button data-role="create" class="large-create-button"> Record </button>
+            <div data-role="recorded-meals" class="ingredient-amount-display-list"></div>
+        </div>
+    </template>
+
+    <template id="meal-creation-section-template">
+        <div class="form-card">
+            <div>
+                <div class="header-1 white-text"> MEAL CREATION </div>
+                <div class="grey-text"> Save your meals to reuse later here </div>
+            </div>
+            <div>
+                <div class="entry-title"> Name </div>
+                <input type="text" data-role="name"
+                    placeholder="e.g. Homemade burger"> </input>
+            </div>
+            <div>
+                <div class="entry-title"> Ingredients </div>
+                <div data-insert="incremental-list"></div>
+            </div>
+            <button id="create-meal-button" data-role="create"
+                class="large-create-button"> Create </button>
+            <div class="vertical-list overflow-y-hidden">
+                <div class="entry-title"> Your Meals </div>
+                <div data-role="meal-list" class="meal-list"></div>
+            </div>
+        </div>
+    </template>
+
+    <template id="nutrient-creation-section-template">
+        <div class="form-card">
+            <div>
+                <div class="header-1 white-text"> DEFINE NUTRIENTS </div>
+                <div class="grey-text"> Define nutrients to use in your macro measurements </div>
+            </div>
+            <div class="horizontal-list gap-5">
+                <div>
+                    <div class="entry-title"> Name </div>
+                    <input id="nutrient-name-input" type="text" 
+                        placeholder="Calories, Protein, Vitamin C...">
+                </div>
+                <div>
+                    <div class="entry-title"> Unit </div>
+                    <select id="nutrient-unit-input">
+                        <option value="g"> g </option>
+                        <option value="mg"> mg </option>
+                        <option value="kcal"> kcal </option>
+                    </select>
+                </div>
+                <button id="create-nutrient-button"> Create </button>
+            </div>
+            <div id="nutrient-item-list" class="vertical-list"> </div>
+        </div>
+    </template>
+
+    <template id="ingredient-list-section-template">
+        <div class="form-card">
+            <div>
+                <div class="header-1 white-text"> INGREDIENT LIST </div>
+                <div class="grey-text"> View all your ingredients here </div>
+            </div>
+            <div id="ingredient-list" data-role="ingredient-list">
+                
+            </div>
+        </div>
+    </template>
+
+    <template id="ingredient-creation-section-template">
+        <div class="form-card">
+            <div>
+                <div class="header-1 white-text"> CREATE CUSTOM INGREDIENT </div>
+                <div class="grey-text"> Create an ingredient to use in your meals </div>
+            </div>
+            <div>
+                <div class="entry-title"> Ingredient name </div>
+                <input data-role="name" type="text" placeholder="Peanut butter...">
+            </div>
+            <div>
+                <div class="entry-title"> Nutritional values per </div>
+                <div class="horizontal-list gap-5">
+                    <input data-role="grams" type="number" style="width: 45px;" placeholder="100">
+                    <div class="white-text"> grams </div>
+                </div>
+            </div>
+            <div class="vertical-list overflow-y-hidden">
+                <div class="entry-title"> Macros </div>
+                <div data-insert="incremental-list"
+                    style="overflow-y: auto;"></div>
+            </div>
+            <button id="create-ingredient-button" data-role="create"
+                class="large-create-button"> Create ingredient </button>
+        </div>
+    </template>
+
+    <!-- controls -->
+
+    <template id="incremental-list-template">
+        <div class="incremental-list">
+            <div class="vertical-list" data-role="internal-list"></div>
+            <div class="incremental-list-text" data-role="empty-message">asd</div>
+            <button class="incremental-list-button" data-role="button">sasd</button>
+        </div>
+    </template>
+
+    <template id="meal-display-item-template">
+        <div class="meal-display-item">
+            <div class="meal-header">
+                <div data-role="meal-name" class="item-name"> meal name </div>
+                <div data-role="meal-date" class="tag hidden"> meal date </div>
+                <div data-role="meal-time" class="tag hidden"> meal time </div>
+            </div>
+            <div data-role="ingredient-list" class="meal-display-item-ingredients"></div>
+            <div class="meal-display-item-totals">
+                <div data-role="nutrient-totals" class="vertical-list"></div>
+            </div>
+        </div>
+    </template>
+
+     <template id="nutrient-item-template">
+        <div class="nutrient-item">
+            <div class="horizontal-list left padding-10 gap-5">
+                <div class="item-name" data-output="name"> Calories </div>
+                <div class="tag" data-output="unit"> kcal </div>
+            </div>
+            <button class="nutrient-delete-button" data-role="delete"> X </button>
+        </div>
+    </template>
+
+    <template id="nutrient-amount-creation-item-template">
+        <div class="amount-creation-item">
+            <div class="left">
+                <select data-role="nutrient"></select>
+                <input type="number" data-role="amount"
+                    placeholder="Amount">
+            </div>
+            <button class="nutrient-amount-item-delete" data-role="delete"> X </button>
+        </div>
+    </template>
+
+    <template id="ingredient-amount-creation-item-template">
+        <div class="amount-creation-item">
+            <div class="left horizontal-list gap-5">
+                <select data-role="ingredient"></select>
+                <input type="number" data-role="amount"
+                    placeholder="Amount">
+                <div class="ingredient-amount-grams"> grams </div>
+            </div>
+            <button class="nutrient-amount-item-delete" data-role="delete"> X </button>
+        </div>
+    </template>
+
+    <template id="ingredient-amount-display-item-template">
+        <div class="ingredient-amount-display-item">
+            <div class="horizontal-list gap-5">
+                <div data-role="name" class="ingredient-amount-name"> Name </div>
+                <div data-role="amount" class="tag"> Amount </div>
+            </div>
+            <div data-role="nutrient-amounts" class="ingredient-nutrient-amounts-long"> macros text </div>
+        </div>
+    </template>
+
+    <template id="ingredient-item-template">
+        <div class="ingredient-item">
+            <div class="horizontal-list">
+                <div data-role="name" class="item-name"></div>
+                <button data-role="delete" class="right"> X </button>
+            </div>
+            <div data-role="grams" class="ingredient-grams"></div>
+            <div data-role="nutrient-list" class="nutrient-list"></div>
+        </div>
+    </template>
+
+    <template id="nutrient-amount-display-item-template">
+        <div class="nutrient-amount-display-item">
+            <div data-role="label"></div>
+        </div>
+    </template>
+
+    <!-- Scripts -->
+
+    <script src="data.js" defer></script>
+    <script src="state.js" defer></script>
+    <script src="renderer.js" defer></script>
+    <script src="router.js" defer></script>
+    <script src="main.js" defer></script> <!-- main.js is last in load order -->
+</body>
